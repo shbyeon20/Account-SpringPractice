@@ -1,5 +1,7 @@
 package com.example.account.dto;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -10,7 +12,11 @@ public class CreateAccount {
     @Setter
 
     public static class Request{
+        @NotNull
+        @Min(1)
         private Long userId;
+        @NotNull
+        @Min(100)
         private Long initialBalance;
 
     }
