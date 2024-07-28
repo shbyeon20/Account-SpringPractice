@@ -12,4 +12,8 @@ public class AccountException extends RuntimeException {
    private ErrorCode errorCode;
    private String Errormessage;
 
+   public AccountException(ErrorCode errorCode) {
+      this.errorCode = errorCode;
+      this.Errormessage = errorCode.getDescription();
+   }
 }

@@ -7,16 +7,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class AccountDtoTest {
 
     @Test
-    void accountDto(){
+    void accountDto() {
         //given
         //when
         //then
 
-        AccountDto accountDto = new AccountDto();
-        accountDto.setAccountNumber("accountNumber");
-        accountDto.setNickname("summer");
 
-        System.out.println(accountDto.toString());
     }
-
 }

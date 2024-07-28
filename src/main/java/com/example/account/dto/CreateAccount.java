@@ -1,5 +1,6 @@
 package com.example.account.dto;
 
+import com.example.account.domain.Account;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -31,5 +32,13 @@ public class CreateAccount {
         private String accountNumber;
         private LocalDateTime registeredAt;
 
+        public static Response from (AccountDto accountDto) {
+            return Response.builder().
+                    accountNumber(accountDto.getAccountNumber())
+                    .userId(accountDto.getUserId())
+                    .registeredAt(accountDto.getRegisteredAt())
+                    .build();
+
+        }
     }
 }

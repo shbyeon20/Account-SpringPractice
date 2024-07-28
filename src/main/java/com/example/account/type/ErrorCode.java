@@ -7,7 +7,10 @@ import lombok.Getter;
 @AllArgsConstructor
 
 public enum ErrorCode {
-    USER_NOT_FOUND("사용자가 없습니다.");
+    USER_NOT_FOUND("사용자가 없습니다."),
+    ACCOUNT_NOT_FOUND("계좌가 없습니다");
+
+
 
 
     private final String description;
