@@ -52,8 +52,8 @@ class AccountServiceTest {
         given(accountRepository.findFirstByOrderByIdDesc())
                 .willReturn(Optional.of(
                         Account.builder()
-                        .accountNumber("1000000012")
-                        .build()));
+                                .accountNumber("1000000012")
+                                .build()));
 
         given(accountRepository.save(any())).willReturn(
                 Account.builder()
@@ -365,22 +365,25 @@ class AccountServiceTest {
         List<AccountDto> accountDtos = accountService.getAccountsByUserId(1L);
 
         //then
-        assertEquals(accountDtos.size(),3);
-        assertEquals(accountDtos.get(0).getAccountNumber(),"1111111111");
-        assertEquals(accountDtos.get(0).getBalance(),1000L);
-        assertEquals(accountDtos.get(1).getAccountNumber(),"2222222222");
-        assertEquals(accountDtos.get(1).getBalance(),2000L);
-        assertEquals(accountDtos.get(2).getAccountNumber(),"3333333333");
-        assertEquals(accountDtos.get(2).getBalance(),3000L);
+        assertEquals(accountDtos.size(), 3);
+        assertEquals(accountDtos.get(0).getAccountNumber(), "1111111111");
+        assertEquals(accountDtos.get(0).getBalance(), 1000L);
+        assertEquals(accountDtos.get(1).getAccountNumber(), "2222222222");
+        assertEquals(accountDtos.get(1).getBalance(), 2000L);
+        assertEquals(accountDtos.get(2).getAccountNumber(), "3333333333");
+        assertEquals(accountDtos.get(2).getBalance(), 3000L);
     }
 
-@Test
-void failedToGetAccount() {
-    //given
-    given(accountRepository.findById(anyLong()))
-            .willReturn(Optional.empty());
-    //when
+    @Test
+    void failedToGetAccount() {
+        //given
+        given(accountUserRepository.findById(anyLong()))
+                .willReturn(Optional.empty());
+        //when
+        AccountException exception = assertThrows(AccountException.class
+                , () -> accountService.getAccountsByUserId(1L));
 
-    //then
-}
+        //then
+        assertEquals(ErrorCode.USER_NOT_FOUND, exception.getErrorCode());
+    }
 }
