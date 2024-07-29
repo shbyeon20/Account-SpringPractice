@@ -5,38 +5,73 @@ import com.example.account.domain.AccountUser;
 import com.example.account.dto.AccountDto;
 import com.example.account.repository.AccountRepository;
 import com.example.account.repository.AccountUserRepository;
-import com.example.account.type.AccountStatus;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.Optional;
 
-@SpringBootTest
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
+@ExtendWith(MockitoExtension.class)
 class AccountServiceTest {
 
-    @Autowired
-    private AccountService accountService;
-    @Autowired
+    @Mock
     private AccountRepository accountRepository;
-    @Autowired
+    @Mock
     private AccountUserRepository accountUserRepository;
 
+    @InjectMocks
+    private AccountService accountService;
 
-        @Test
-        void testCreateAccount () {
-            accountUserRepository.save(AccountUser.builder().id(1L).name(
-                    "proro").build());
+    @Test
+    void createAccountSuccess() {
+        //given
+        given(accountUserRepository.findById(anyLong()))
+                .willReturn(Optional.of(
+                        AccountUser.builder()
+                                .id(12L)
+                                .name("Pobi")
+                                .build()));
 
-            AccountDto accountdto = accountService.createAccount(1L, 1000L);
+        given(accountRepository.findFirstByOrderByIdDesc())
+                .willReturn(Optional.of(Account.builder().accountNumber(
+                                "1000000012")
+                        .build()));
 
-            assertEquals("1000000000",accountdto.getAccountNumber());
-            assertEquals(1000,accountdto.getAccountNumber());
+        given(accountRepository.save(any())).willReturn(
+                Account.builder()
+                        .accountUser(
+                                AccountUser.builder()
+                                        .id(12L)
+                                        .name("Pobi")
+                                        .build())
+                        .accountNumber("1000000013")
+                        .build());
 
 
 
 
-        }
+        //when
+        AccountDto accountDto = accountService.createAccount(1L, 100L);
+
+
+        //then
+        assertEquals(12, accountDto.getUserId());
+        ArgumentCaptor<Account> captor = ArgumentCaptor.forClass(Account.class);
+        verify(accountRepository, times(1)).save(captor.capture());
+        assertEquals("1000000013", captor.getValue().getAccountNumber());
+
 
     }
+
+
+}

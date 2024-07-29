@@ -36,7 +36,6 @@ public class AccountService {
         AccountUser accountUser =
                 accountUserRepository.findById(userId).orElseThrow(() ->
                         new AccountException(ErrorCode.USER_NOT_FOUND));
-
         String accountNumber = accountRepository.findFirstByOrderByIdDesc().
                 map(Account -> Integer.parseInt(Account.getAccountNumber()) + 1 + "")
                 .orElse("1000000000");
