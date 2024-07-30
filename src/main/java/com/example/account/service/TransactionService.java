@@ -58,6 +58,8 @@ public class TransactionService {
 
 
 
+
+
     private static void validateUseBalance(Account account,
                                            AccountUser accountUser, Long amount) {
         if (!Objects.equals(accountUser.getId(), account.getAccountUser().getId())) {
