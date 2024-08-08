@@ -15,11 +15,5 @@ public enum ErrorCode {
     BALANCE_NOT_EMPTY("잔액이 있는 게좌는 해지할 수 없습니다"),
     AMOUNT_EXCEED_BALANCE("거래 금액이 계좌 잔액보다 큽니다.");
 
-
-
-
-
     private final String description;
-
-
 }

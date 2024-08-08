@@ -1,5 +1,5 @@
 ### get account
-GET http://localhost:8080/account?user_Id=2
+GET http://localhost:8080/account?user_Id=1049
 Content-Type: application/json
 
 
@@ -9,7 +9,7 @@ POST http://localhost:8080/account
 Content-Type: application/json
 
 {
-  "userId": 2,
+  "userId": "a",
   "initialBalance": 500
 }
 
