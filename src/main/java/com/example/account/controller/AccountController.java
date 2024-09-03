@@ -5,14 +5,11 @@ import com.example.account.domain.Account;
 import com.example.account.dto.AccountInfo;
 import com.example.account.dto.CreateAccount;
 import com.example.account.dto.DeleteAccount;
-import com.example.account.dto.ErrorResponse;
 import com.example.account.service.AccountService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.security.auth.login.AccountNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,6 +48,7 @@ public class AccountController {
     @GetMapping("/account")
     public List<AccountInfo> getAccountByUserId(
             @RequestParam("user_Id") Long userId) {
+
 
         return accountService.getAccountsByUserId(userId).stream()
                 .map(accountDto ->
